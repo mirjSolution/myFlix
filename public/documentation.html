@@ -3,13 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+    <title>myFlix API</title>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <body>
     <h1>myFlix API</h1>
     <h2>Create a REST API with Node.js</h2>
-    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quaerat qui nisi autem explicabo veniam voluptas consequuntur exercitationem, nemo atque vel minima reiciendis, culpa eligendi rem amet, at tempore dicta non?</p>
+    <table>
+        <thead>
+        <tr>
+            <th>Business Logic</th>
+            <th>URL</th>
+            <th>HTTP Method</th>
+            <th>Request body data format</th>
+            <th>Response body data format</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Get a list of movies</td>
+            <td>/movies</td>
+            <td>GET</td>
+            <td>None</td>
+            <td>A JSON object holding data about all the movies</td>
+        </tr>
+        <tr>
+            <td>Get data about a single movie by title</td>
+            <td>/movies/[Title] </td>
+            <td>GET</td>
+            <td>None</td>
+            <td>A JSON object holding data about a single movie, containing an ID, title, description, genre classes property. 
+                <br>Example:
+                <br>{
+                <br>&nbsp;&nbsp; id : 1,
+                <br>&nbsp;&nbsp; title : The Irishman,
+                <br>&nbsp;&nbsp; genre : [Action, Drama]
+                <br>}
+            </td>
+        </tr>
+        <tr>
+            <td>Add movie</td>
+            <td>/movies</td>
+            <td>POST</td>
+            <td>A JSON object holding data about the movie to add, structured like:
+                <br>{
+                <br>&nbsp;&nbsp; title : The Irishman,
+                <br>&nbsp;&nbsp; genre : [Action, Drama]
+                <br>}</td>
+            <td>A JSON object holding data about the movie that was added, including an ID: 
+                <br>{
+                <br>&nbsp;&nbsp; id : 1,
+                <br>&nbsp;&nbsp; title : The Irishman,
+                <br>&nbsp;&nbsp; genre : [Action, Drama]
+                <br>}
+            </td>
+        </tr>
+        <tr>
+            <td>Remove a movie by ID</td>
+            <td>/movies/[ID]</td>
+            <td>DELETE</td>
+            <td>None</td>
+            <td>A text message indicating whether the movie was successfully removed</td>
+        </tr>
+        <tr>
+            <td>Update a movie genre in certain title</td>
+            <td>/movies/[Title]/[Genre]/[Type]</td>
+            <td>PUT</td>
+            <td>None</td>
+            <td>A text message indicating the title genre, and type that was updated</td>
+        </tr>
+        <tr>
+            <td>Get the genres of the movie</td>
+            <td>/movies/[Title]/genre</td>
+            <td>GET</td>
+            <td>None</td>
+            <td>A text message indication the genres of the title</td>
+        </tr>
+        </tbody>
+    </table>
 </body>
 </html>

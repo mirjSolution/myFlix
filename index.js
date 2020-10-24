@@ -5,48 +5,35 @@ const morgan = require('morgan');
 // Encapsulate express functionality
 const app = express();
 
+app.use(bodyParser.json());
+
 // List of movies array
 let movies = [
   {
+    id: 1,
     title: 'Pain & Glory',
-    actor: 'Antonio Banderas'
+    genre: ['action', 'drama']
   },
   {
+    id: 2,
     title: 'The Irishman',
-    actor: 'Robert De Niro'
+    genre: ['action']
   },
   {
+    id: 3,
     title: 'Once Upon a Time…in Hollywood',
-    actor: 'Leonardo DiCaprio'
+    genre: ['comedy', 'action']
   },
   {
+    id: 4,
     title: 'Marriage Story',
-    actor: 'Adam Driver'
+    genre: ['drama']
   },
   {
+    id: 5,
     title: 'Little Women',
-    actor: 'Saoirse Ronan'
+    genre: ['comedy', 'romance']
   },
-  {
-    title: 'Parasite',
-    actor: 'Bong Joon Ho'
-  },
-  {
-    title: 'Knives Out',
-    actor: 'Ana de Armas'
-  },
-  {
-    title: 'Dolemite Is My Name',
-    actor: 'Eddie Murphy'
-  },
-  {
-    title: 'A Beautiful Day in the Neighborhood',
-    actor: 'Tom Hanks'
-  },
-  {
-    title: 'Hustlers',
-    actor: 'Jennifer Lopez'
-  }
 ];
   
 // // The common parameter here specifies that requests should be logged using Morgan’s “common” format, which logs basic data such as IP address, the time of the request, the request method and path, as well as the status code that was sent back as a response 
