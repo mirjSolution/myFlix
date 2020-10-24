@@ -52,7 +52,7 @@ let movies = [
 // // The common parameter here specifies that requests should be logged using Morgan’s “common” format, which logs basic data such as IP address, the time of the request, the request method and path, as well as the status code that was sent back as a response 
 app.use(morgan('common'))
 
-// // automatically routes all requests for static files -> URL endpoint is the /documentation/documentation.html
+// // automatically routes all requests for static files -> URL endpoint is the /documentation.html
 app.use(express.static('public'));
 
 /*
