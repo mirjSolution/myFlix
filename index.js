@@ -14,33 +14,7 @@ const app = express();
 app.use(bodyParser.json());
 
 // List of movies array
-let movies = [
-  {
-    id: 1,
-    title: 'Pain and Glory',
-    genre: ['action', 'drama']
-  },
-  {
-    id: 2,
-    title: 'The Irishman',
-    genre: ['action']
-  },
-  {
-    id: 3,
-    title: 'Once Upon a Time…in Hollywood',
-    genre: ['comedy', 'action']
-  },
-  {
-    id: 4,
-    title: 'Marriage Story',
-    genre: ['drama']
-  },
-  {
-    id: 5,
-    title: 'Little Women',
-    genre: ['comedy', 'romance']
-  },
-];
+let movies = [];
   
 // // The common parameter here specifies that requests should be logged using Morgan’s “common” format, which logs basic data such as IP address, the time of the request, the request method and path, as well as the status code that was sent back as a response morgan(':method :url :status :res[content-length] - :response-time ms')
 app.use(morgan('common'))
