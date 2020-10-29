@@ -32,7 +32,8 @@ const Movies = Models.Movie;
 const Users = Models.User;
 
 // allows Mongoose to connect to that database so it can perform CRUD operations on the documents it contains from within REST API.
-mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
+// mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // With this line of code in place, any time you try to access the body of a request using req.body, the data will be expected to be in JSON format.
 app.use(bodyParser.json());
