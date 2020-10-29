@@ -4,6 +4,9 @@ const express = require('express');
 // Encapsulate express functionality
 const app = express();
 
+// The express validator library offers a variety of validation methods for different types of inputted data.
+const { check, validationResult } = require('express-validator');
+
 //  is another HTTP request logger middleware for Node. js. It simplifies the process of logging requests to your application 
 const morgan = require('morgan');
 
@@ -33,14 +36,31 @@ mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, 
 // With this line of code in place, any time you try to access the body of a request using req.body, the data will be expected to be in JSON format.
 app.use(bodyParser.json());
 
-// List of movies array
-let movies = [];
-  
-// // The common parameter here specifies that requests should be logged using Morgan’s “common” format, which logs basic data such as IP address, the time of the request, the request method and path, as well as the status code that was sent back as a response morgan(':method :url :status :res[content-length] - :response-time ms')
+// Require cors module
+const cors = require('cors');
+// allow requests from all origins 
+// app.use(cors());
+// only certain origins to be given access
+app.use(cors({
+  origin: (origin, callback) => {
+    if(!origin) return callback(null, true);
+    if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin isn’t found on the list of allowed origins
+      let message = 'The CORS policy for this application doesn’t allow access from origin ' + origin;
+      return callback(new Error(message ), false);
+    }
+    return callback(null, true);
+  }
+}));
+
+// The common parameter here specifies that requests should be logged using Morgan’s “common” format, which logs basic data such as IP address, the time of the request, the request method and path, as well as the status code that was sent back as a response morgan(':method :url :status :res[content-length] - :response-time ms')
 app.use(morgan('common'))
 
-// // automatically routes all requests for static files -> URL endpoint is the /documentation.html
+// automatically routes all requests for static files -> URL endpoint is the /documentation.html
 app.use(express.static('public'));
+
+let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+
+
 
 /*
 app.METHOD(PATH, HANDLER)
@@ -49,7 +69,6 @@ Handler -> Callback Function when the URL endpoint is matched and has two parame
             - req -> contain data about the request
             - res -> allow you to control the HTTP response       
 */ 
-
 // "/" -> URL Endpoint is the root directory
 app.get('/', (req, res) => {
     // res.send() -> built in syntax for express that specified the Content-type of the HTTP response as plain text no need to manually create the header.
@@ -110,52 +129,90 @@ app.get('/movies/directors/:name', passport.authenticate('jwt', { session: false
 });
 
 // Allow new users to register
-app.post('/users', (req, res) => {
-  Users.findOne({ Username: req.body.username })
-    .then((user) => {
-      if (user) {
-        return res.status(400).send(req.body.username + 'already exists');
-      } else {
-        Users
-          .create({
-            Username: req.body.username,
-            Password: req.body.password,
-            Email: req.body.email,
-            Birthday: req.body.birthday
-          })
-          .then((user) =>{res.status(201).json(user) })
-        .catch((error) => {
-          console.error(error);
-          res.status(500).send('Error: ' + error);
-        })
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).send('Error: ' + error);
-    });
-});
+app.post('/users',
+  // Validation logic here for request
+  //you can either use a chain of methods like .not().isEmpty()
+  //which means "opposite of isEmpty" in plain english "is not empty"
+  //or use .isLength({min: 5}) which means
+  //minimum value of 5 characters are only allowed
+  [
+    check('Username', 'Username is required').isLength({min: 5}),
+    check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+    check('Password', 'Password is required').not().isEmpty(),
+    check('Email', 'Email does not appear to be valid').isEmail()
+  ], (req, res) => {
+
+  // check the validation object for errors
+    let errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+
+    let hashedPassword = Users.hashPassword(req.body.Password);
+    Users.findOne({ Username: req.body.Username }) // Search to see if a user with the requested username already exists
+      .then((user) => {
+        if (user) {
+          //If the user is found, send a response that it already exists
+          return res.status(400).send(req.body.Username + ' already exists');
+        } else {
+          Users
+            .create({
+              Username: req.body.username,
+              Password: hashedPassword,
+              Email: req.body.email,
+              Birthday: req.body.birthday
+            })
+            .then((user) => { res.status(201).json(user) })
+            .catch((error) => {
+              console.error(error);
+              res.status(500).send('Error: ' + error);
+            });
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).send('Error: ' + error);
+      });
+  });
 
 // Allow users to update their user info (username, password, email, date of birth)
-app.put('/users/:username', (req, res) => {
-  Users.findOneAndUpdate({ Username: req.params.username }, { $set:
-    {
-      Username: req.body.username,
-      Password: req.body.password,
-      Email: req.body.email,
-      Birthday: req.body.birthday
-    }
-  },
-  { new: true }, // This line makes sure that the updated document is returned
-  (err, updatedUser) => {
-    if(err) {
-      console.error(err);
-      res.status(500).send('Error: ' + err);
-    } else {
-      res.json(updatedUser);
-    }
-  });
+app.put('/users/:username',
+  [
+  check('Username', 'Username is required').isLength({min: 5}),
+  check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+  check('Password', 'Password is required').not().isEmpty(),
+  check('Email', 'Email does not appear to be valid').isEmail()
+  ], (req, res) => {
+
+  // check the validation object for errors
+  let errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array()
 });
+}
+
+let hashedPassword = Users.hashPassword(req.body.password);
+
+  Users.findOneAndUpdate({ Username: req.params.username},
+    { $set: {
+        Username: req.body.username,
+        Password: hashedPassword,
+        Email: req.body.email,
+        Birthdate: req.body.birthday
+      }
+    },
+    {new: true},
+    (err, updatedUser) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+      } else {
+        res.status(201).json(updatedUser);
+      }
+    });
+  });
 
 // Allow users to update their user info (username, password, email, date of birth)
 app.post('/users/:username/movies/:movieID', passport.authenticate('jwt', { session: false }), (req, res) => {
@@ -212,7 +269,7 @@ app.use((err, req, res, next) => {
   res.status(500).send('Something broke!');
 });
 
-// listen for requests
-app.listen(8080, () => {
-  console.log('Your app is listening on port 8080.');
+const port = process.env.PORT || 8080;
+app.listen(port, '0.0.0.0',() => {
+ console.log('Listening on Port ' + port);
 });

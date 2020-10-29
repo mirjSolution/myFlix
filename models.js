@@ -1,5 +1,7 @@
 // Requiring mongoose package. Make sure to install on your dependency
 const mongoose = require('mongoose');
+// to hash users’ passwords
+const bcrypt = require('bcrypt');
 
 // Database schema
 let movieSchema = mongoose.Schema({
@@ -27,6 +29,14 @@ let movieSchema = mongoose.Schema({
     Birthday: Date,
     FavoriteMovies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movie' }]
   });
+
+  userSchema.statics.hashPassword = (password) => {
+    return bcrypt.hashSync(password, 10);
+  };
+  
+  userSchema.methods.validatePassword = function(password) {
+    return bcrypt.compareSync(password, this.Password);
+  };
   
   //This will create collections called “db.movies” and “db.users” 
   let Movie = mongoose.model('Movie', movieSchema);
