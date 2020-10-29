@@ -1,9 +1,22 @@
 // Import express module or requiring express framework package.
 const express = require('express');
+
+// Encapsulate express functionality
+const app = express();
+
 //  is another HTTP request logger middleware for Node. js. It simplifies the process of logging requests to your application 
 const morgan = require('morgan');
+
 // Allows to read the “body” of HTTP requests within your request handlers simply by using the code req.body.
 const bodyParser = require('body-parser');
+
+// "app" argument you're passing here. This ensures that Express is available in your “auth.js”
+let auth = require('./auth')(app);
+
+// Import passport module
+const passport = require('passport');
+require('./passport');
+
 // UUID stands for Universally Unique Identifier. With this module installed, you’re able to generate a unique ID at any point in time by simply using the code uuid.v4()
 const uuid = require('uuid')
 
@@ -16,9 +29,6 @@ const Users = Models.User;
 
 // allows Mongoose to connect to that database so it can perform CRUD operations on the documents it contains from within REST API.
 mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
-
-// Encapsulate express functionality
-const app = express();
 
 // With this line of code in place, any time you try to access the body of a request using req.body, the data will be expected to be in JSON format.
 app.use(bodyParser.json());
@@ -50,7 +60,8 @@ app.get('/', (req, res) => {
 });
 
 // Return a list of ALL movies to the user
-app.get('/movies', (req, res) => {
+// Any request to the “movies” endpoint will require a JWT from the client because of passport authenticate.
+app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.find()
     .then((movies) => {
       res.status(201).json(movies);
@@ -62,7 +73,7 @@ app.get('/movies', (req, res) => {
 });
 
 // Return data (description, genre, director, image URL, whether it’s featured or not) about a single movie by title to the user
-app.get('/movies/:title', (req, res) => {
+app.get('/movies/:title', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.findOne({ Title: req.params.title })
     .then((movie) => {
       res.status(201).json(movie);
@@ -74,7 +85,7 @@ app.get('/movies/:title', (req, res) => {
 });
 
 // Return data about a genre (description) by name/title (e.g., “Thriller”)
-app.get('/movies/genre/:title', (req, res) => {
+app.get('/movies/genre/:title', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.findOne({ Title: req.params.title })
     .then((movie) => {
      res.status(201).json({Genre: movie.Genre.Name, Description: movie.Genre.Description}
@@ -87,7 +98,7 @@ app.get('/movies/genre/:title', (req, res) => {
 });
 
 // Return data about a director (bio, birth year, death year) by name
-app.get('/movies/directors/:name', (req, res) => {
+app.get('/movies/directors/:name', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.findOne({ "Director.Name" : req.params.name})
     .then((movie) => { 
       res.status(201).json({Bio: movie.Director.Bio, Birth: movie.Director.Birth, Death: movie.Director.Death});
@@ -147,7 +158,7 @@ app.put('/users/:username', (req, res) => {
 });
 
 // Allow users to update their user info (username, password, email, date of birth)
-app.post('/users/:username/movies/:movieID', (req, res) => {
+app.post('/users/:username/movies/:movieID', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.findOneAndUpdate({ Username: req.params.username }, {
      $push: { FavoriteMovies: req.params.movieID }
    },
@@ -163,7 +174,7 @@ app.post('/users/:username/movies/:movieID', (req, res) => {
 });
 
 // Allow users to remove a movie from their list of favorites
-app.delete('/users/:username/movies/:movieID', (req, res) => {
+app.delete('/users/:username/movies/:movieID', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.findOneAndUpdate(
     { Username: req.params.username},
     { $pull: { FavoriteMovies: req.params.movieID}
