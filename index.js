@@ -4,6 +4,7 @@ const express = require('express');
 // Encapsulate express functionality
 const app = express();
 
+const path = require('path');
 // The express validator library offers a variety of validation methods for different types of inputted data.
 const { check, validationResult } = require('express-validator');
 
@@ -73,7 +74,8 @@ Handler -> Callback Function when the URL endpoint is matched and has two parame
 app.get('/', (req, res) => {
     // res.send() -> built in syntax for express that specified the Content-type of the HTTP response as plain text no need to manually create the header.
     // sends a response of various types
-    res.send('Welcome to main route!')
+    // res.send('Welcome to main route!')
+    res.sendFile( path.resolve('./public/documentation.html') );
     // Uncomment the code below to try error handling middleware function
     // throw new Error('Something went wrong!');
 });
