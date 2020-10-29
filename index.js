@@ -157,7 +157,7 @@ app.post('/users',
       .then((user) => {
         if (user) {
           //If the user is found, send a response that it already exists
-          return res.status(400).send(req.body.username + ' already exists');
+          return res.status(400).send(req.body.Username + ' already exists');
         } else {
           Users
             .create({
@@ -196,14 +196,14 @@ app.put('/users/:username',
 });
 }
 
-let hashedPassword = Users.hashPassword(req.body.password);
+let hashedPassword = Users.hashPassword(req.body.Password);
 
-  Users.findOneAndUpdate({ Username: req.params.username},
+  Users.findOneAndUpdate({ Username: req.params.Username},
     { $set: {
-        Username: req.body.username,
+        Username: req.body.Username,
         Password: hashedPassword,
-        Email: req.body.email,
-        Birthday: req.body.birthday
+        Email: req.body.Email,
+        Birthday: req.body.Birthday
       }
     },
     {new: true},
