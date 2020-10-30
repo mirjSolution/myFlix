@@ -58,7 +58,7 @@ npm run dev
 
 ## Demo
 
-The API is live at [devcamper.io](https://devcamper.io)
+The API is live at [myflix3.herokuapp.com](https://myflix3.herokuapp.com/)
 
 - Version: 1.0.0
 - License: MIT
