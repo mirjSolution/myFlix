@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const { User } = require('../models');
 
 let UserSchema = mongoose.Schema({
     username: {type: String, required: true},
