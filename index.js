@@ -1,11 +1,15 @@
 const path = require('path');
 const express = require('express');
+const mongoose = require('mongoose');
 const cors = require('cors');
 
-const connectDB = require('./config/db');
-
 // Connect to database
-connectDB();
+mongoose.connect(process.env.CONNECTION_URI, {
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
+  useUnifiedTopology: true,
+});
 
 const app = express();
 
