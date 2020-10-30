@@ -4,8 +4,8 @@
 
 ## Usage on Postman
 
-- Add user first using post method [copy and paste on postman](https://myflix3.herokuapp.com/users)
-- Log in using post method [copy and paste on postman](https://myflix3.herokuapp.com/users)
+- Add user first using post method https://myflix3.herokuapp.com/users
+- Log in using post method https://myflix3.herokuapp.com/users
 - Copy the token created just like the json below
 
 ```json
