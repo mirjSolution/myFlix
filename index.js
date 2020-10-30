@@ -48,7 +48,7 @@ app.get('/', (req, res) => {
 // Mount routers
 app.use('/auth', auth);
 app.use('/users', users);
-app.use('/movies', passport.authenticate('jwt', { session: false }), movies);
+app.use('/movies', movies);
 
 // Listen to connection
 const port = process.env.PORT || 8080;
