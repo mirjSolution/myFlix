@@ -1,24 +1,50 @@
 const path = require('path');
 const express = require('express');
-const bodyParser = require('body-parser');
+const passport = require('passport');
+const cors = require('cors');
+
 const connectDB = require('./config/db');
 
 // Connect to database
 connectDB();
 
-// Route files
-const movies = require('./routes/movies');
-
 const app = express();
 
+// Route files
+const auth = require('./routes/auth');
+const movies = require('./routes/movies');
+const users = require('./routes/users');
+
 // Body parser
-app.use(bodyParser.json());
+app.use(express.json());
+
+// Require cors module
+let allowedOrigins = ['http://localhost:8080', 'https://myflix3.herokuapp.com'];
+// app.use(cors()); // allow requests from all origins
+// only certain origins to be given access
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) === -1) {
+        // If a specific origin isn’t found on the list of allowed origins
+        let message =
+          'The CORS policy for this application doesn’t allow access from origin ' +
+          origin;
+        return callback(new Error(message), false);
+      }
+      return callback(null, true);
+    },
+  })
+);
 
 // Set static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Mount routers
-app.use('/movies', movies);
+app.use('/auth', auth);
+app.use('/users', users);
+app.use('/movies', passport.authenticate('jwt', { session: false }), movies);
 
 // Listen to connection
 const port = process.env.PORT || 8080;
