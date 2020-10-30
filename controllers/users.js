@@ -1,15 +1,9 @@
-const { check, validationResult } = require('express-validator');
 const User = require('../models/User');
 
 // @desc      Add user
 // @route     POST /users
-exports.addUser = (req, res, next) => {
+exports.addUser = (req, res) => {
   // check the validation object for errors
-  let errors = validationResult(req);
-
-  if (!errors.isEmpty()) {
-    return res.status(422).json({ errors: errors.array() });
-  }
 
   let hashedPassword = User.hashPassword(req.body.password);
   User.findOne({ Username: req.body.username }) // Search to see if a user with the requested username already exists
@@ -41,7 +35,7 @@ exports.addUser = (req, res, next) => {
 
 // @desc      Update user
 // @route     PUT /users/:username
-exports.updateUser = (req, res, next) => {
+exports.updateUser = (req, res) => {
   let hashedPassword = User.hashPassword(req.body.password);
   User.findOneAndUpdate(
     { username: req.params.username },
@@ -67,7 +61,7 @@ exports.updateUser = (req, res, next) => {
 
 // @desc      Delete user
 // @route     DELETE /users/:username
-exports.deleteUser = (req, res, next) => {
+exports.deleteUser = (req, res) => {
   User.findOneAndRemove({ username: req.params.username })
     .then((user) => {
       if (!user) {
@@ -84,7 +78,7 @@ exports.deleteUser = (req, res, next) => {
 
 // @desc      Add a list of favorite movie to a user
 // @route     POST /users/:username/movies/:movieId
-exports.addFavoriteMovie = (req, res, next) => {
+exports.addFavoriteMovie = (req, res) => {
   User.findOneAndUpdate(
     { username: req.params.username },
     {
@@ -104,7 +98,7 @@ exports.addFavoriteMovie = (req, res, next) => {
 
 // @desc      Remove a list of favorite movie to a user
 // @route     DELETE /users/:username/movies/:movieId
-exports.deleteFavoriteMovie = (req, res, next) => {
+exports.deleteFavoriteMovie = (req, res) => {
   User.findOneAndUpdate(
     { username: req.params.username },
     { $pull: { favoriteMovies: req.params.movieID } },

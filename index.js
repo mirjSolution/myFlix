@@ -1,6 +1,5 @@
 const path = require('path');
 const express = require('express');
-const passport = require('passport');
 const cors = require('cors');
 
 const connectDB = require('./config/db');

@@ -2,7 +2,7 @@ const Movie = require('../models/Movie');
 
 // @desc      Get all movies
 // @route     GET /movies
-exports.getMovies = (req, res, next) => {
+exports.getMovies = (req, res) => {
   Movie.find()
     .then((movies) => {
       res.status(200).json(movies);
@@ -15,7 +15,7 @@ exports.getMovies = (req, res, next) => {
 
 // @desc      Get movie by title
 // @route     GET /movies/:title
-exports.getMovie = (req, res, next) => {
+exports.getMovie = (req, res) => {
   Movie.findOne({ title: new RegExp(`^${req.params.title}$`, 'i') })
     .then((movie) => {
       res.status(200).json(movie);
@@ -28,7 +28,7 @@ exports.getMovie = (req, res, next) => {
 
 // @desc      Get genre by name/title
 // @route     GET /movies/genre/:title
-exports.getMovieGenre = (req, res, next) => {
+exports.getMovieGenre = (req, res) => {
   Movie.findOne({ title: new RegExp(`^${req.params.title}$`, 'i') })
     .then((movie) => {
       res.status(200).json({
@@ -44,7 +44,7 @@ exports.getMovieGenre = (req, res, next) => {
 
 // @desc      Get director by name
 // @route     GET /movies/directors/:director
-exports.getMovieDirector = (req, res, next) => {
+exports.getMovieDirector = (req, res) => {
   Movie.findOne({ 'director.name': new RegExp(`^${req.params.name}$`, 'i') })
     .then((movie) => {
       res.status(201).json({
