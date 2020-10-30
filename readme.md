@@ -60,6 +60,6 @@ npm run dev
 
 The API is live at [myflix3.herokuapp.com](https://myflix3.herokuapp.com/)
 
-- Version: -0.0
+- Version: 1.0.0
 - License: MIT
 - Author: Rico John Dato-on
