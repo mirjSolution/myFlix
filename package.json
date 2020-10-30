@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "nodemon server"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,8 @@
     "passport-local": "^1.0.0",
     "uuid": "^8.3.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^1.19.2"
+  },
   "description": ""
 }
