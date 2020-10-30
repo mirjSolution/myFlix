@@ -1,33 +1,29 @@
 const passport = require('passport'),
   LocalStrategy = require('passport-local').Strategy,
-  Models = require('./models.js'),
+  Model = require('../models/User'),
   passportJWT = require('passport-jwt');
 
-let Users = Models.User,
+let User = Model,
   JWTStrategy = passportJWT.Strategy,
   ExtractJWT = passportJWT.ExtractJwt;
 
-// “LocalStrategy,” defines your basic HTTP authentication for login requests. LocalStrategy takes a username and password from the request body and uses Mongoose to check your database for a user with the same username
 passport.use(
   new LocalStrategy(
     {
-      usernameField: 'Username',
-      passwordField: 'Password',
+      usernameField: 'username',
+      passwordField: 'password',
     },
     (username, password, callback) => {
       console.log(username + '  ' + password);
-      Users.findOne({ Username: username }, (error, user) => {
+      User.findOne({ username: username }, (error, user) => {
         if (error) {
           console.log(error);
           return callback(error);
         }
 
-        //If an error occurs, or if the username can’t be found within the database, an error message is passed to the callback:
         if (!user) {
           console.log('incorrect username');
-          return callback(null, false, {
-            message: 'Incorrect username or password.',
-          });
+          return callback(null, false, { message: 'Incorrect username.' });
         }
 
         if (!user.validatePassword(password)) {
@@ -51,7 +47,7 @@ passport.use(
       secretOrKey: 'bkslbsd-05u7ophn095789fdihbiuf',
     },
     (jwtPayload, callback) => {
-      return Users.findById(jwtPayload._id)
+      return User.findById(jwtPayload._id)
         .then((user) => {
           return callback(null, user);
         })
