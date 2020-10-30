@@ -1,4 +1,5 @@
 const express = require('express');
+const { validateUser } = require('../middleware/validationResult');
 const {
   addUser,
   updateUser,
@@ -6,10 +7,11 @@ const {
   addFavoriteMovie,
   deleteFavoriteMovie,
 } = require('../controllers/users');
+
 const router = express.Router();
 
-router.route('/').post(addUser);
-router.route('/:username').put(updateUser).delete(deleteUser);
+router.route('/').post(validateUser, addUser);
+router.route('/:username').put(validateUser, updateUser).delete(deleteUser);
 router
   .route('/:username/movies/:movieID')
   .post(addFavoriteMovie)

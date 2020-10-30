@@ -1,8 +1,16 @@
+const { check, validationResult } = require('express-validator');
 const User = require('../models/User');
 
 // @desc      Add user
 // @route     POST /users
 exports.addUser = (req, res, next) => {
+  // check the validation object for errors
+  let errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
+
   let hashedPassword = User.hashPassword(req.body.password);
   User.findOne({ Username: req.body.username }) // Search to see if a user with the requested username already exists
     .then((user) => {
