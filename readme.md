@@ -4,9 +4,9 @@
 
 ## Usage on Postman
 
-1.  Add user first using post method [copy and paste on postman](https://myflix3.herokuapp.com/users)
-1.  Log in using post method [copy and paste on postman](https://myflix3.herokuapp.com/users)
-1.  Copy the token created just like the json below
+- Add user first using post method [copy and paste on postman](https://myflix3.herokuapp.com/users)
+- Log in using post method [copy and paste on postman](https://myflix3.herokuapp.com/users)
+- Copy the token created just like the json below
 
 ```json
 {
@@ -14,33 +14,33 @@
 }
 ```
 
-1.  Do this everytime the endpoint is returning a 401 status code meaning you are not authenticated to access the endpoint. On authorization tab select "Bearer Token" and paste the token in the input.
-1.  Routes available and description
-1.  Movie avalaible endpoints
-    1.  [GET](https://myflix3.herokuapp.com/movies) - Get all movies
-    1.  [GET](https://myflix3.herokuapp.com/movies/MovieTitle) - Get movie by title
-    1.  [GET](https://myflix3.herokuapp.com/movies/genre/ Titanic) - Get genre by name/title
-    1.  [GET](https://myflix3.herokuapp.com/movies/directors/John McTierna) - Get director by name
-1.  Users avalaible endpoints
+- Do this everytime the endpoint is returning a 401 status code meaning you are not authenticated to access the endpoint. On authorization tab select "Bearer Token" and paste the token in the input.
+- Routes available and description
+- Movie avalaible endpoints
+  - https://myflix3.herokuapp.com/movies - Get all movies
+  - https://myflix3.herokuapp.com/movies/MovieTitle - Get movie by title
+  - https://myflix3.herokuapp.com/movies/genre/ Titanic - Get genre by name/title
+  - https://myflix3.herokuapp.com/movies/directors/John McTierna - Get director by name
+- Users avalaible endpoints
 
-    1.  [POST](https://myflix3.herokuapp.com/movies/directors/John McTierna) - Add User on the bodey raw follow the format below
+  - https://myflix3.herokuapp.com/movies/directors/John McTierna - Add User on the bodey raw follow the format below
 
-        ```json
-        {
-          "username": "Testing1",
-          "password": "12345",
-          "email": "tes1t@test.com",
-          "birthday": "1-31-1990"
-        }
-        ```
+    ```json
+    {
+      "username": "Testing1",
+      "password": "12345",
+      "email": "tes1t@test.com",
+      "birthday": "1-31-1990"
+    }
+    ```
 
-    1.  [PUT](https://myflix3.herokuapp.com/movies/directors/John McTierna) - Update user on the body raw follow the same format as adding use.
-    1.  [DELETE](https://myflix3.herokuapp.com/users/Testing1) - Remove user
-    1.  [Add list of favorite movies](https://myflix3.herokuapp.com/users/Testing1/movies/5f96ff28cca7aaedc126dee9) - add favorite movie
-    1.  [Remove list of favorite movies](hhttps://myflix3.herokuapp.com/users/Testing2/movies/5f96ff28cca7aaedc126dee9) -remove favorite movie
+  - https://myflix3.herokuapp.com/movies/directors/John McTierna - Update user on the body raw follow the same format as adding use.
+  - https://myflix3.herokuapp.com/users/Testing1 - Remove user
+  - https://myflix3.herokuapp.com/users/Testing1/movies/5f96ff28cca7aaedc126dee9 - add favorite movie
+  - hhttps://myflix3.herokuapp.com/users/Testing2/movies/5f96ff28cca7aaedc126dee9 -remove favorite movie
 
-1.  Authentication
-    1.  [POST](https://myflix3.herokuapp.com/movies) - https://myflix3.herokuapp.com/users;
+- Authentication
+  - https://myflix3.herokuapp.com/movies - https://myflix3.herokuapp.com/users;
 
 ## Install Dependencies
 
@@ -60,6 +60,6 @@ npm run dev
 
 The API is live at [myflix3.herokuapp.com](https://myflix3.herokuapp.com/)
 
-- Version: 1.0.0
+- Version: -0.0
 - License: MIT
 - Author: Rico John Dato-on
