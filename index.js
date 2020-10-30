@@ -41,6 +41,10 @@ app.use(
 // Set static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.get('/', (req, res) => {
+  res.sendFile(path.resolve('./public/documentation.html'));
+});
+
 // Mount routers
 app.use('/auth', auth);
 app.use('/users', users);
