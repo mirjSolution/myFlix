@@ -22,7 +22,7 @@ const users = require('./routes/users');
 app.use(express.json());
 
 // Require cors module
-let allowedOrigins = ['http://localhost:8080', 'https://myflix3.herokuapp.com'];
+let allowedOrigins = ['http://localhost:8080'];
 // app.use(cors()); // allow requests from all origins
 // only certain origins to be given access
 app.use(
