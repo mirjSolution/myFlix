@@ -15,13 +15,13 @@
 ```
 
 - Do this everytime the endpoint is returning a 401 status code meaning you are not authenticated to access the endpoint. On authorization tab select "Bearer Token" and paste the token in the input.
-- Routes available and description
-- Movie avalaible endpoints
+- Available endpoints and description
+- Movie
   - https://myflix3.herokuapp.com/movies - Get all movies
   - https://myflix3.herokuapp.com/movies/MovieTitle - Get movie by title
   - https://myflix3.herokuapp.com/movies/genre/ Titanic - Get genre by name/title
   - https://myflix3.herokuapp.com/movies/directors/John McTierna - Get director by name
-- Users avalaible endpoints
+- Users
 
   - https://myflix3.herokuapp.com/movies/directors/John McTierna - Add User on the bodey raw follow the format below
 
