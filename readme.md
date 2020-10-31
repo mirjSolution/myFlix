@@ -42,6 +42,20 @@
 - Authentication
   - https://myflix3.herokuapp.com/movies - https://myflix3.herokuapp.com/users;
 
+## Usage
+
+- If you clone or download the repo. Replace the connection db with your own connection strings.
+
+```js
+// Connect to database
+mongoose.connect(process.env.CONNECTION_URI, {
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
+  useUnifiedTopology: true,
+});
+```
+
 ## Install Dependencies
 
 ```
