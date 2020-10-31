@@ -40,7 +40,7 @@
   - hhttps://myflix3.herokuapp.com/users/Testing2/movies/5f96ff28cca7aaedc126dee9 -remove favorite movie
 
 - Authentication
-  - https://myflix3.herokuapp.com/movies - https://myflix3.herokuapp.com/users;
+  - https://myflix3.herokuapp.com/movies - Login user
 
 ## Usage
 
