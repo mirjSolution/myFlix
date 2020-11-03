@@ -9,9 +9,7 @@ const {
 
 const router = express.Router();
 
-router
-  .route('/')
-  .get(passport.authenticate('jwt', { session: false }), getMovies);
+router.route('/').get(getMovies);
 router
   .route('/:title')
   .get(passport.authenticate('jwt', { session: false }), getMovie);
