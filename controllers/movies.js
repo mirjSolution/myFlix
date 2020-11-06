@@ -44,7 +44,9 @@ exports.getMovieGenre = (req, res) => {
 // @desc      Get director by name
 // @route     GET /movies/directors/:director
 exports.getMovieDirector = (req, res) => {
-  Movie.findOne({ 'director.name': new RegExp(`^${req.params.name}$`, 'i') })
+  Movie.findOne({
+    'director.name': new RegExp(`^${req.params.director}$`, 'i'),
+  })
     .then((movie) => {
       res.status(201).json({
         movie,

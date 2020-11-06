@@ -16,10 +16,10 @@ router
   .route('/:title')
   .get(passport.authenticate('jwt', { session: false }), getMovie);
 router
-  .route('/:genre')
+  .route('/genre/:genre')
   .get(passport.authenticate('jwt', { session: false }), getMovieGenre);
 router
-  .route('/directors/:director')
+  .route('/director/:director')
   .get(passport.authenticate('jwt', { session: false }), getMovieDirector);
 
 module.exports = router;
