@@ -29,11 +29,10 @@ exports.getMovie = (req, res) => {
 // @desc      Get genre by name/title
 // @route     GET /movies/genre/:title
 exports.getMovieGenre = (req, res) => {
-  Movie.findOne({ title: new RegExp(`^${req.params.title}$`, 'i') })
+  Movie.findOne({ 'genre.name': new RegExp(`^${req.params.genre}$`, 'i') })
     .then((movie) => {
       res.status(200).json({
-        genre: movie.genre.name,
-        Description: movie.genre.description,
+        movie,
       });
     })
     .catch((err) => {
@@ -48,9 +47,7 @@ exports.getMovieDirector = (req, res) => {
   Movie.findOne({ 'director.name': new RegExp(`^${req.params.name}$`, 'i') })
     .then((movie) => {
       res.status(201).json({
-        bio: movie.director.bio,
-        birth: movie.director.birth,
-        death: movie.director.death,
+        movie,
       });
     })
     .catch((err) => {
