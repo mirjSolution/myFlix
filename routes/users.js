@@ -15,10 +15,7 @@ router.route('/').post(validateUser, addUser);
 router.route('/:username').put(validateUser, updateUser).delete(deleteUser);
 router
   .route('/:username/movies/:movieID')
-  .post(passport.authenticate('jwt', { session: false }), addFavoriteMovie)
-  .delete(
-    passport.authenticate('jwt', { session: false }),
-    deleteFavoriteMovie
-  );
+  .post(addFavoriteMovie)
+  .delete(deleteFavoriteMovie);
 
 module.exports = router;
