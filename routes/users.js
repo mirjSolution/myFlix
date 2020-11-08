@@ -14,7 +14,7 @@ const router = express.Router();
 router.route('/').post(validateUser, addUser);
 router.route('/:username').put(validateUser, updateUser).delete(deleteUser);
 router
-  .route('/:username/movies/:movieID')
+  .route('/:username/movies/:movie')
   .post(addFavoriteMovie)
   .delete(deleteFavoriteMovie);
 

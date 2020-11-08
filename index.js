@@ -4,15 +4,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 
 // Connect to database
-// mongoose.connect(
-//   'mongodb+srv://myFlixDBadmin:jMv6rqINfCrjOoDt@myflixdb.le9cb.mongodb.net/myFlixDB?retryWrites=true&w=majority',
-//   {
-//     useNewUrlParser: true,
-//     useCreateIndex: true,
-//     useFindAndModify: false,
-//     useUnifiedTopology: true,
-//   }
-// );
+
 mongoose.connect(process.env.CONNECTION_URI, {
   useNewUrlParser: true,
   useCreateIndex: true,

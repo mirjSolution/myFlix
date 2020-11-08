@@ -1,1 +1,11 @@
 node_modules
+
+# mongoose.connect(
+#   'mongodb+srv://myFlixDBadmin:jMv6rqINfCrjOoDt@myflixdb.le9cb.mongodb.net/myFlixDB?retryWrites=true&w=majority',
+#   {
+#     useNewUrlParser: true,
+#     useCreateIndex: true,
+#     useFindAndModify: false,
+#     useUnifiedTopology: true,
+#   }
+# );

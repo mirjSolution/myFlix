@@ -82,7 +82,7 @@ exports.addFavoriteMovie = (req, res) => {
   User.findOneAndUpdate(
     { username: req.params.username },
     {
-      $push: { favoriteMovies: req.params.movieID },
+      $push: { favoriteMovies: req.params.movie },
     },
     { new: true }, // This line makes sure that the updated document is returned
     (err, updatedUser) => {
@@ -101,7 +101,7 @@ exports.addFavoriteMovie = (req, res) => {
 exports.deleteFavoriteMovie = (req, res) => {
   User.findOneAndUpdate(
     { username: req.params.username },
-    { $pull: { favoriteMovies: req.params.movieID } },
+    { $pull: { favoriteMovies: req.params.movie } },
     { new: true },
     (err, updatedUser) => {
       if (err) {
