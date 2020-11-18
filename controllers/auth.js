@@ -20,8 +20,7 @@ exports.login = (req, res) => {
   passport.authenticate('local', { session: false }, (error, user) => {
     if (error || !user) {
       return res.status(400).json({
-        message: 'Something is not right',
-        user: user,
+        message: 'Invalid Credential',
       });
     }
     req.login(user, { session: false }, (error) => {
@@ -29,28 +28,8 @@ exports.login = (req, res) => {
         res.send(error);
       }
       let token = generateJWTToken(user.toJSON());
-      return res.json({ user, token });
+      let username = user.username;
+      return res.json({ user: { username }, token });
     });
   })(req, res);
 };
-
-// const username = req.query.username;
-//   const password = req.query.password;
-
-//   if (!username || !password) {
-//     return res.status(400).send('Please provide username and password');
-//   }
-
-//   User.findOne({ username: new RegExp(`^${username}$`, 'i') })
-//     .then((user) => {
-//       bcrypt.compare(password, user.password, (err, result) => {
-//         if (result) {
-//           let token = generateJWTToken(user.toJSON());
-//           return res.status(200).json({ user, token });
-//         }
-//       });
-//     })
-//     .catch((err) => {
-//       console.error(err);
-//       return res.status(500).send('Invalid credential');
-//     });

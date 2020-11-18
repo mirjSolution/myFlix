@@ -22,13 +22,13 @@ passport.use(
         }
 
         if (!user) {
-          console.log('incorrect username');
-          return callback(null, false, { message: 'Incorrect username.' });
+          console.log('Invalid Credential');
+          return callback(null, false, { message: 'Invalid Credential.' });
         }
 
         if (!user.validatePassword(password)) {
-          console.log('incorrect password');
-          return callback(null, false, { message: 'Incorrect password.' });
+          console.log('Invalid Credential');
+          return callback(null, false, { message: 'Invalid Credential.' });
         }
 
         console.log('finished');

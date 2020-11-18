@@ -7,14 +7,20 @@ const {
   deleteUser,
   addFavoriteMovie,
   deleteFavoriteMovie,
+  getUser,
 } = require('../controllers/users');
 
 const router = express.Router();
 
 router.route('/').post(validateUser, addUser);
-router.route('/:username').put(validateUser, updateUser).delete(deleteUser);
+
 router
-  .route('/:username/movies/:movie')
+  .route('/:username')
+  .put(validateUser, updateUser)
+  .delete(deleteUser)
+  .get(passport.authenticate('jwt', { session: false }), getUser);
+router
+  .route('/:username/movies/:title')
   .post(addFavoriteMovie)
   .delete(deleteFavoriteMovie);
 

@@ -6,7 +6,7 @@ let UserSchema = mongoose.Schema({
   password: { type: String, required: true },
   email: { type: String, required: true },
   birthday: Date,
-  favoriteMovies: [{ type: String }],
+  favoriteMovies: [String],
   // favoriteMovies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movie' }],
 });
 
