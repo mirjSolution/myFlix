@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const uniqueValidator = require('mongoose-unique-validator');
 const bcrypt = require('bcrypt');
 
 let UserSchema = mongoose.Schema({
@@ -17,5 +18,7 @@ UserSchema.statics.hashPassword = (password) => {
 UserSchema.methods.validatePassword = function (password) {
   return bcrypt.compareSync(password, this.password);
 };
+
+UserSchema.plugin(uniqueValidator);
 
 module.exports = mongoose.model('User', UserSchema);
